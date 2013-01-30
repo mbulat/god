@@ -19,8 +19,18 @@
 
 include_recipe "runit"
 
-gem_package "god" do
+gem_package "xmpp4r" do
   action :install
+end
+
+if node["god"] && node["god"]["install_type"] == "gem"
+  gem_package "god" do
+    action :install
+  end
+else
+  package "god" do
+    action :install
+  end
 end
 
 directory "/etc/god/conf.d" do
